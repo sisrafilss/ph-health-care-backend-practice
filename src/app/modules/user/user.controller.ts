@@ -2,26 +2,22 @@ import { Request, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
 import { UserService } from "./user.service";
 import sendResponse from "../../shared/sendResponse";
+import pick from "../../helpers/pick";
+import { IOptions } from "../../helpers/paginationHelper";
+import { userFilterableField } from "./user.constant";
 
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
-  const query = req.query;
-  const { page, limit, searchTerm, sortBy, sortOrder, status, role } = query;
+  const filter = pick(req.query, userFilterableField);
+  const options = pick(req.query, ["page", "limit", "sortBy", "sortOrder"]);
 
-  const result = await UserService.getAllFromDB({
-    page: Number(page),
-    limit: Number(limit),
-    searchTerm,
-    sortBy,
-    sortOrder,
-    role,
-    status,
-  });
+  const result = await UserService.getAllFromDB(filter, options as IOptions);
 
   sendResponse(res, {
     statusCode: 200,
     success: true,
     message: "Fetched All Users",
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 const createPatient = catchAsync(async (req: Request, res: Response) => {

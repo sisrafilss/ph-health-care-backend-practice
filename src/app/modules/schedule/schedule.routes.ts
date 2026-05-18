@@ -1,0 +1,16 @@
+import express, { NextFunction, Request, Response } from "express";
+import { ScheduleController } from "./schedule.controller";
+import auth from "../../middlewares/auth";
+import { UserRole } from "../../generated/enums";
+
+const router = express.Router();
+
+router.get(
+  "/",
+  auth(UserRole.DOCTOR, UserRole.ADMIN),
+  ScheduleController.scheduleForDoctor,
+);
+router.post("/", ScheduleController.insertIntoDB);
+router.delete("/:id", ScheduleController.deleteScheduleFromDB);
+
+export const scheduleRoutes = router;

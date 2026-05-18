@@ -3,7 +3,7 @@ import { prisma } from "../../../lib/prisma";
 import { UserRole, UserStatus } from "../../generated/enums";
 import jwt from "jsonwebtoken";
 import config from "../../../config";
-import { jwtHelper } from "../../helpers/generateToken";
+import { jwtHelper } from "../../helpers/jwtHelper";
 
 const login = async (payload: { email: string; password: string }) => {
   const user = await prisma.user.findFirstOrThrow({

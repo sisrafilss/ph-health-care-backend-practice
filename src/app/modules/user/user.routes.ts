@@ -2,11 +2,13 @@ import express, { NextFunction, Request, Response } from "express";
 import { UserController } from "./user.controller";
 import { fileUploader } from "../../helpers/fileUploader";
 import { userValidation } from "./user.validation";
+import auth from "../../middlewares/auth";
+import { UserRole } from "../../generated/enums";
 
 const router = express.Router();
 
 // GET - All users
-router.get("/", UserController.getAllFromDB);
+router.get("/", auth(UserRole.ADMIN), UserController.getAllFromDB);
 
 router.post(
   "/create-patient",

@@ -1,0 +1,38 @@
+import { NextFunction, Request, Response } from "express";
+import { jwtHelper } from "../helpers/jwtHelper";
+import config from "../../config";
+import { JwtPayload } from "jsonwebtoken";
+
+const auth = (...roles: string[]) => {
+  return async (
+    req: Request & { user?: JwtPayload },
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const token = req.cookies.accessToken;
+
+      if (!token) {
+        throw new Error("You are not authorized");
+      }
+
+      const verifyUser = jwtHelper.verifyToken(
+        token,
+        config.jwt.jwt_access_token_secret as string,
+      );
+
+      req.user = verifyUser;
+
+      if (roles.length && !roles.includes(verifyUser.role)) {
+        throw new Error("You are not authorized");
+      }
+
+      next();
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
+};
+
+export default auth;
