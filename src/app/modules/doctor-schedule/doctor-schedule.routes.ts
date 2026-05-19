@@ -5,6 +5,8 @@ import { UserRole } from "../../generated/enums";
 
 const router = express.Router();
 
+router.get("/", DoctorScheduleController.getAllDoctorSchedule);
+
 router.post("/", auth(UserRole.DOCTOR), DoctorScheduleController.insertIntoDB);
 
 export const doctorScheduleRoutes = router;
