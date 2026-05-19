@@ -32,17 +32,13 @@ const getAllDoctorSchedule = async (params: any, options: IOptions) => {
 
   const andCondition: DoctorSchedulesWhereInput[] = [];
 
-  if (isBooked) {
+  if (isBooked === 'true' || isBooked === 'false') {
     andCondition.push({
-      AND: [
-        {
-          isBooked: true,
-        },
-      ],
-    });
+      isBooked: isBooked === 'true'
+    })
   }
 
-  const whereCondition: DoctorSchedulesWhereInput = andCondition
+  const whereCondition: DoctorSchedulesWhereInput = andCondition.length > 0
     ? { AND: andCondition }
     : {};
 
@@ -69,7 +65,23 @@ const getAllDoctorSchedule = async (params: any, options: IOptions) => {
   };
 };
 
+// const deleteDoctorSchedule = async (user: IJwtPayload, scheduleId: string) => {
+//   const doctorData = await prisma.doctor.findFirstOrThrow({
+//     where: {
+//       email: user.email
+//     }
+//   })
+
+//   return await prisma.doctorSchedules.delete({
+//     where: {
+//       scheduleId,
+//       doctorId: doctorData.id
+//     }
+//   })
+// }
+
 export const DoctorScheduleService = {
   insertIntoDB,
   getAllDoctorSchedule,
+  // deleteDoctorSchedule
 };
