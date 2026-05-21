@@ -3,16 +3,16 @@ import z, { ZodObject } from "zod";
 
 const validateRequest =
   (schema: ZodObject) =>
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      await schema.parseAsync({
-        body: req.body,
-      });
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        await schema.parseAsync({
+          body: req.body,
+        });
 
-      return next();
-    } catch (err) {
-      next(err);
-    }
-  };
+        return next();
+      } catch (err) {
+        next(err);
+      }
+    };
 
 export default validateRequest;
