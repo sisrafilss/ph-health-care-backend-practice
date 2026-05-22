@@ -23,7 +23,6 @@ const getAllFromDB = async (params: any, options: IOptions) => {
     });
   }
 
-  console.log("SPECIALTIES", specialties);
   if (specialties && specialties.length > 0) {
     andCondition.push({
       doctorSpecialities: {
@@ -55,7 +54,7 @@ const getAllFromDB = async (params: any, options: IOptions) => {
   const result = await prisma.doctor.findMany({
     skip,
     take: limit,
-    where: whereCondition,
+    where: { isDeleted: false, ...whereCondition },
     orderBy: {
       [sortBy]: sortOrder,
     },
@@ -135,7 +134,41 @@ const updateIntoDB = async (
   return updatedData;
 };
 
+const getDoctorById = async (id: string) => {
+  return prisma.doctor.findUniqueOrThrow({
+    where: {
+      id,
+    },
+    include: {
+      doctorSpecialities: {
+        include: {
+          specialtes: true,
+        },
+      },
+    },
+  });
+};
+
+const deleteFromDB = async (id: string) => {
+  await prisma.doctor.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  return await prisma.doctor.update({
+    where: {
+      id,
+    },
+    data: {
+      isDeleted: true,
+    },
+  });
+};
+
 export const DoctorService = {
   getAllFromDB,
   updateIntoDB,
+  getDoctorById,
+  deleteFromDB,
 };

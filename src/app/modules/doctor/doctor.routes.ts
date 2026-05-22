@@ -5,11 +5,16 @@ import { DoctorController } from "./doctor.controller";
 
 const router = express.Router();
 
-// GET - All users
 router.get(
   "/",
   auth(UserRole.ADMIN, UserRole.DOCTOR),
   DoctorController.getAllFromDB,
+);
+
+router.get(
+  "/:id",
+  auth(UserRole.ADMIN, UserRole.DOCTOR),
+  DoctorController.getDoctorById,
 );
 
 router.patch(
@@ -17,5 +22,8 @@ router.patch(
   auth(UserRole.ADMIN, UserRole.DOCTOR),
   DoctorController.updateIntoDB,
 );
+
+// soft delete
+router.delete("/:id", auth(UserRole.ADMIN), DoctorController.deleteFromDB);
 
 export const doctorRoutes = router;
