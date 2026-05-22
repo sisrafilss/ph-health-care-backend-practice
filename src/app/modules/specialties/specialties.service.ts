@@ -1,20 +1,38 @@
 import { Request } from "express";
-import { fileUploader } from "../../helpers/fileUploader";
 import { prisma } from "../../../lib/prisma";
+import { Specialties } from "../../generated/client";
+import { fileUploader } from "../../helpers/fileUploader";
 
-const insertIntoDB = async (req: Request) => {
-    if (req.file) {
-        const uploadToColudinary = await fileUploader.uploadToCloudinary(req.file);
-        req.body.icon = uploadToColudinary?.secure_url;
-    }
+const inserIntoDB = async (req: Request) => {
+  const file = req.file;
 
-    const result = await prisma.specialties.create({
-        data: req.body
-    })
-    console.log(req.body);
-    return req.body;
-}
+  if (file) {
+    const uploadToCloudinary = await fileUploader.uploadToCloudinary(file);
+    req.body.icon = uploadToCloudinary?.secure_url;
+  }
+
+  const result = await prisma.specialties.create({
+    data: req.body,
+  });
+
+  return result;
+};
+
+const getAllFromDB = async (): Promise<Specialties[]> => {
+  return await prisma.specialties.findMany();
+};
+
+const deleteFromDB = async (id: string): Promise<Specialties> => {
+  const result = await prisma.specialties.delete({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
 
 export const SpecialtiesService = {
-    insertIntoDB
-}
+  inserIntoDB,
+  getAllFromDB,
+  deleteFromDB,
+};
