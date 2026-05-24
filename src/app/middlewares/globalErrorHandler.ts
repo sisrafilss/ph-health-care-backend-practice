@@ -29,6 +29,12 @@ const globalErrorHandler = (
       error = err.meta;
       statusCode = httpStatus.BAD_REQUEST;
     }
+    if (err.code === "P2025") {
+      message =
+        "Operation failed because it depends on one or more records that were required but not found.";
+      error = err.meta;
+      statusCode = httpStatus.BAD_REQUEST;
+    }
   } else if (err instanceof Prisma.PrismaClientValidationError) {
     message = "Validation Error";
     error = err.message;
