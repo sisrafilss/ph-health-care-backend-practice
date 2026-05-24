@@ -11,10 +11,10 @@ router.get(
   DoctorController.getAllFromDB,
 );
 
-router.get(
-  "/:id",
-  auth(UserRole.ADMIN, UserRole.DOCTOR),
-  DoctorController.getDoctorById,
+router.post(
+  "/suggestion",
+
+  DoctorController.getAISuggestions,
 );
 
 router.patch(

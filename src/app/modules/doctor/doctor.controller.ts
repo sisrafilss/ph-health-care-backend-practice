@@ -57,9 +57,21 @@ const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getAISuggestions = catchAsync(async (req: Request, res: Response) => {
+  const result = await DoctorService.getAISuggestions(req.body);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "AI Doctor Suggestions fetched successfull.",
+    data: result,
+  });
+});
+
 export const DoctorController = {
   getAllFromDB,
   updateIntoDB,
   getDoctorById,
   deleteFromDB,
+  getAISuggestions,
 };

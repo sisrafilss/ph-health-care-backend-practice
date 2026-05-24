@@ -1,4 +1,6 @@
+import httpStatus from "http-status";
 import { prisma } from "../../../lib/prisma";
+import ApiError from "../../errors/ApiError";
 import { DoctorWhereInput } from "../../generated/models";
 import { IOptions, paginationHelper } from "../../helpers/paginationHelper";
 import { doctorSearchableFields } from "./doctor.constant";
@@ -166,9 +168,27 @@ const deleteFromDB = async (id: string) => {
   });
 };
 
+const getAISuggestions = async (payload: { symptoms: string }) => {
+  if (!(payload && payload.symptoms)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "symptoms is required!");
+  }
+
+  const doctors = await prisma.doctor.findMany({
+    where: { isDeleted: false },
+    include: {
+      doctorSpecialities: {
+        include: {
+          specialtes: true,
+        },
+      },
+    },
+  });
+};
+
 export const DoctorService = {
   getAllFromDB,
   updateIntoDB,
   getDoctorById,
   deleteFromDB,
+  getAISuggestions,
 };

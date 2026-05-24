@@ -20,4 +20,5 @@ export default {
     jwt_refresh_token_expires_in: process.env.JWT_REFRESH_TOKEN_EXPIRES_IN,
     jwt_algorithm: process.env.JWT_ALGORITHM,
   },
+  open_router_api_key: process.env.OPEN_ROUTER_API_KEY,
 };
