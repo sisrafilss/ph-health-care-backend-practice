@@ -2,6 +2,8 @@ import httpStatus from "http-status";
 import { prisma } from "../../../lib/prisma";
 import ApiError from "../../errors/ApiError";
 import { DoctorWhereInput } from "../../generated/models";
+import { extractJsonFromAIResponse } from "../../helpers/extractJsonFromAIResponse";
+import { openRouterclient } from "../../helpers/openRouter";
 import { IOptions, paginationHelper } from "../../helpers/paginationHelper";
 import { doctorSearchableFields } from "./doctor.constant";
 import { IDoctorUpdateInput } from "./doctor.interface";
@@ -183,6 +185,49 @@ const getAISuggestions = async (payload: { symptoms: string }) => {
       },
     },
   });
+
+  const prompt = `
+You are an AI medical assistant.
+
+Patient symptoms:
+"${payload.symptoms}"
+
+Available doctors:
+${JSON.stringify(doctors, null, 2)}
+
+Your task:
+1. Analyze the symptoms.
+2. Suggest the MOST relevant doctors.
+3. Return maximum 3 doctors.
+4. Return ONLY valid JSON.
+5. Do not explain anything.
+
+Return your response in JSON format with full individual doctor data.
+`;
+
+  const completion = await openRouterclient.chat.send({
+    chatRequest: {
+      model: "openai/gpt-oss-120b:free",
+      messages: [
+        {
+          role: "system",
+          content: "You are an expert medical assistant.",
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+    },
+  });
+
+  console.log("MESSAGE: ", completion.choices[0].message.content);
+
+  const suggestedDoctors = extractJsonFromAIResponse(
+    completion.choices[0].message.content,
+  );
+
+  return { AIresponse: suggestedDoctors };
 };
 
 export const DoctorService = {
