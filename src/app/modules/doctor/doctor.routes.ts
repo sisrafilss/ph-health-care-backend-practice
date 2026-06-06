@@ -7,8 +7,14 @@ const router = express.Router();
 
 router.get(
   "/",
-  auth(UserRole.ADMIN, UserRole.DOCTOR),
+  // auth(UserRole.ADMIN, UserRole.DOCTOR),
   DoctorController.getAllFromDB,
+);
+
+router.get(
+  "/:id",
+  // auth(UserRole.ADMIN, UserRole.DOCTOR),
+  DoctorController.getDoctorById,
 );
 
 router.post(
