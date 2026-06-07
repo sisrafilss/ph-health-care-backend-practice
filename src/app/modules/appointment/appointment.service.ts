@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { prisma } from "../../../lib/prisma";
+import { stripe } from "../../helpers/stripe";
 import { IJwtPayload } from "../../types/common";
 
 const createAppointment = async (
@@ -59,6 +60,34 @@ const createAppointment = async (
         amount: doctorData.appointmentFee,
         transactionId,
       },
+    });
+
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+
+      payment_method_types: ["card"],
+
+      line_items: [
+        {
+          quantity: 1,
+
+          price_data: {
+            currency: "bdt",
+
+            product_data: {
+              name: "Doctor Appointment",
+              description: `Appointment with Dr. John Doe (Cardiologist)`,
+            },
+
+            unit_amount: 8000, // $80.00
+          },
+        },
+      ],
+
+      success_url:
+        "http://localhost:3000/payment-success?session_id={CHECKOUT_SESSION_ID}",
+
+      cancel_url: "http://localhost:3000/payment-cancel",
     });
 
     return appointmentData;

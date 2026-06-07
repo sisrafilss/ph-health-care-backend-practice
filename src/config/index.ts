@@ -21,4 +21,5 @@ export default {
     jwt_algorithm: process.env.JWT_ALGORITHM,
   },
   open_router_api_key: process.env.OPEN_ROUTER_API_KEY,
+  stripe_secret_key: process.env.STRIPE_SECRET_KEY,
 };
