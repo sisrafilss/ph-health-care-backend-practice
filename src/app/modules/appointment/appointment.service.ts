@@ -54,7 +54,7 @@ const createAppointment = async (
     });
 
     const transactionId = uuidv4();
-    await tnx.payment.create({
+    const paymentData = await tnx.payment.create({
       data: {
         appointmentId: appointmentData.id,
         amount: doctorData.appointmentFee,
@@ -75,11 +75,10 @@ const createAppointment = async (
             currency: "bdt",
 
             product_data: {
-              name: "Doctor Appointment",
-              description: `Appointment with Dr. John Doe (Cardiologist)`,
+              name: `Appointment with ${doctorData.name}`,
             },
 
-            unit_amount: 8000, // $80.00
+            unit_amount: doctorData.appointmentFee * 100,
           },
         },
       ],
@@ -88,9 +87,17 @@ const createAppointment = async (
         "http://localhost:3000/payment-success?session_id={CHECKOUT_SESSION_ID}",
 
       cancel_url: "http://localhost:3000/payment-cancel",
+
+      metadata: {
+        appointmentId: appointmentData.id,
+        paymentId: paymentData.id,
+        doctorName: doctorData.name,
+      },
     });
 
-    return appointmentData;
+    return {
+      paymentURL: session.url,
+    };
   });
 
   return result;
