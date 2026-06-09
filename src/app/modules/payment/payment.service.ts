@@ -47,7 +47,10 @@ const handleStripeWebhook = async (payload: Buffer, signature: string) => {
           id: appointmentId,
         },
         data: {
-          paymentStatus: PaymentStatus.PAID,
+          paymentStatus:
+            session.payment_status === "paid"
+              ? PaymentStatus.PAID
+              : PaymentStatus.UNPAID,
         },
       });
 
@@ -57,7 +60,11 @@ const handleStripeWebhook = async (payload: Buffer, signature: string) => {
           id: paymentId,
         },
         data: {
-          status: PaymentStatus.PAID,
+          status:
+            session.payment_status === "paid"
+              ? PaymentStatus.PAID
+              : PaymentStatus.UNPAID,
+          paymentGatewayData: JSON.parse(JSON.stringify(session)),
         },
       });
 
