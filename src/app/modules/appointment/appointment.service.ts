@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { prisma } from "../../../lib/prisma";
+
 import { stripe } from "../../helpers/stripe";
 import { IJwtPayload } from "../../types/common";
 
@@ -91,7 +92,6 @@ const createAppointment = async (
       metadata: {
         appointmentId: appointmentData.id,
         paymentId: paymentData.id,
-        doctorName: doctorData.name,
       },
     });
 

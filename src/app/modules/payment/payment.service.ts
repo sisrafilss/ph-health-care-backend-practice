@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import config from "../../../config";
 import { prisma } from "../../../lib/prisma";
 import ApiError from "../../errors/ApiError";
+import { PaymentStatus } from "../../generated/enums";
 import { stripe } from "../../helpers/stripe";
 
 const handleStripeWebhook = async (payload: Buffer, signature: string) => {
@@ -18,11 +19,6 @@ const handleStripeWebhook = async (payload: Buffer, signature: string) => {
 
       const appointmentId = session.metadata?.appointmentId;
       const paymentId = session.metadata?.paymentId;
-      const doctorName = session.metadata?.doctorName;
-
-      console.log("APPOINTMENT ID", appointmentId);
-      console.log("PAYMENT ID", paymentId);
-      console.log("DOCTOR NAME", doctorName);
 
       if (!appointmentId) {
         throw new ApiError(
@@ -45,23 +41,23 @@ const handleStripeWebhook = async (payload: Buffer, signature: string) => {
         };
       }
 
-      // Create payment record
-      await prisma.payment.create({
-        data: {
-          transactionId: session.payment_intent as string,
-          amount: (session.amount_total || 0) / 100,
-          status: "PAID",
-          appointmentId,
-        },
-      });
-
       // Update appointment
       await prisma.appointment.update({
         where: {
           id: appointmentId,
         },
         data: {
-          paymentStatus: "PAID",
+          paymentStatus: PaymentStatus.PAID,
+        },
+      });
+
+      // Update payment status
+      await prisma.payment.update({
+        where: {
+          id: paymentId,
+        },
+        data: {
+          status: PaymentStatus.PAID,
         },
       });
 

@@ -9,7 +9,13 @@ import config from "./config";
 
 const app: Application = express();
 
-app.post("/webhook", PaymentController.handleStripeWebhook);
+app.post(
+  "/webhook",
+  express.raw({
+    type: "application/json",
+  }),
+  PaymentController.handleStripeWebhook,
+);
 
 app.use(
   cors({
