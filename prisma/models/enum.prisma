@@ -26,3 +26,19 @@ enum PaymentStatus {
   PAID
   UNPAID
 }
+
+enum BloodGroup {
+  A_POSITIVE  @map("A+")
+  A_NEGATIVE  @map("A-")
+  B_POSITIVE  @map("B+")
+  B_NEGATIVE  @map("B-")
+  AB_POSITIVE @map("AB+")
+  AB_NEGATIVE @map("AB-")
+  O_POSITIVE  @map("O+")
+  O_NEGATIVE  @map("O-")
+}
+
+enum MaritalStatus {
+  MARRIED
+  UNMARRIED
+}

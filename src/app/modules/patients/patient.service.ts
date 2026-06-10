@@ -1,7 +1,7 @@
 import { prisma } from "../../../lib/prisma";
-import { Patient } from "../../generated/client";
 import { PatientWhereInput } from "../../generated/models";
 import { IOptions, paginationHelper } from "../../helpers/paginationHelper";
+import { IJwtPayload } from "../../types/common";
 import { patientSearchableFields } from "./patient.constant";
 
 const getAllPatientsFromDB = async (params: any, options: IOptions) => {
@@ -67,21 +67,68 @@ const getPatientByID = async (id: string) => {
   });
 };
 
-const updatePatientIntoDB = async (id: string, payload: Partial<Patient>) => {
+const getPatientDetail = async (user: IJwtPayload) => {
+  return prisma.patient.findUniqueOrThrow({
+    where: {
+      email: user.email,
+      isDeleted: false,
+    },
+    include: {
+      patientHealthData: true,
+      medicalReport: true,
+    },
+  });
+};
+
+const updatePatientIntoDB = async (user: IJwtPayload, payload: any) => {
+  const { medicalReport, patientHealthData, ...patientData } = payload;
+
   const patientInfo = await prisma.patient.findUniqueOrThrow({
     where: {
-      id,
+      email: user.email,
+      isDeleted: false,
     },
   });
 
-  const updatedData = await prisma.patient.update({
-    where: {
-      id: patientInfo.id,
-    },
-    data: payload,
-  });
+  return await prisma.$transaction(async (tnx) => {
+    await tnx.patient.update({
+      where: {
+        email: user.email,
+      },
+      data: patientData,
+    });
 
-  return updatedData;
+    await tnx.patientHealthData.upsert({
+      where: {
+        patientId: patientInfo.id,
+      },
+      update: {
+        ...patientHealthData,
+      },
+      create: {
+        ...patientHealthData,
+        patientId: patientInfo.id,
+      },
+    });
+
+    await tnx.medicalReport.create({
+      data: {
+        ...medicalReport,
+        patientId: patientInfo.id,
+      },
+    });
+
+    const result = tnx.patient.findUnique({
+      where: {
+        id: patientInfo.id,
+      },
+      include: {
+        patientHealthData: true,
+        medicalReport: true,
+      },
+    });
+    return result;
+  });
 };
 
 const deletePatientFromDB = async (id: string) => {
@@ -106,4 +153,5 @@ export const PatientService = {
   getPatientByID,
   updatePatientIntoDB,
   deletePatientFromDB,
+  getPatientDetail,
 };

@@ -367,10 +367,6 @@ export type DoctorSchedulesUncheckedUpdateManyWithoutScheduleNestedInput = {
   deleteMany?: Prisma.DoctorSchedulesScalarWhereInput | Prisma.DoctorSchedulesScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type DoctorSchedulesCreateNestedManyWithoutDoctorInput = {
   create?: Prisma.XOR<Prisma.DoctorSchedulesCreateWithoutDoctorInput, Prisma.DoctorSchedulesUncheckedCreateWithoutDoctorInput> | Prisma.DoctorSchedulesCreateWithoutDoctorInput[] | Prisma.DoctorSchedulesUncheckedCreateWithoutDoctorInput[]
   connectOrCreate?: Prisma.DoctorSchedulesCreateOrConnectWithoutDoctorInput | Prisma.DoctorSchedulesCreateOrConnectWithoutDoctorInput[]

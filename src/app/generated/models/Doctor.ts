@@ -29,11 +29,13 @@ export type AggregateDoctor = {
 export type DoctorAvgAggregateOutputType = {
   experience: number | null
   appointmentFee: number | null
+  averageRating: number | null
 }
 
 export type DoctorSumAggregateOutputType = {
   experience: number | null
   appointmentFee: number | null
+  averageRating: number | null
 }
 
 export type DoctorMinAggregateOutputType = {
@@ -50,6 +52,7 @@ export type DoctorMinAggregateOutputType = {
   qualification: string | null
   currentWorkingPlace: string | null
   designation: string | null
+  averageRating: number | null
   isDeleted: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -69,6 +72,7 @@ export type DoctorMaxAggregateOutputType = {
   qualification: string | null
   currentWorkingPlace: string | null
   designation: string | null
+  averageRating: number | null
   isDeleted: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -88,6 +92,7 @@ export type DoctorCountAggregateOutputType = {
   qualification: number
   currentWorkingPlace: number
   designation: number
+  averageRating: number
   isDeleted: number
   createdAt: number
   updatedAt: number
@@ -98,11 +103,13 @@ export type DoctorCountAggregateOutputType = {
 export type DoctorAvgAggregateInputType = {
   experience?: true
   appointmentFee?: true
+  averageRating?: true
 }
 
 export type DoctorSumAggregateInputType = {
   experience?: true
   appointmentFee?: true
+  averageRating?: true
 }
 
 export type DoctorMinAggregateInputType = {
@@ -119,6 +126,7 @@ export type DoctorMinAggregateInputType = {
   qualification?: true
   currentWorkingPlace?: true
   designation?: true
+  averageRating?: true
   isDeleted?: true
   createdAt?: true
   updatedAt?: true
@@ -138,6 +146,7 @@ export type DoctorMaxAggregateInputType = {
   qualification?: true
   currentWorkingPlace?: true
   designation?: true
+  averageRating?: true
   isDeleted?: true
   createdAt?: true
   updatedAt?: true
@@ -157,6 +166,7 @@ export type DoctorCountAggregateInputType = {
   qualification?: true
   currentWorkingPlace?: true
   designation?: true
+  averageRating?: true
   isDeleted?: true
   createdAt?: true
   updatedAt?: true
@@ -263,6 +273,7 @@ export type DoctorGroupByOutputType = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating: number
   isDeleted: boolean
   createdAt: Date
   updatedAt: Date
@@ -305,6 +316,7 @@ export type DoctorWhereInput = {
   qualification?: Prisma.StringFilter<"Doctor"> | string
   currentWorkingPlace?: Prisma.StringFilter<"Doctor"> | string
   designation?: Prisma.StringFilter<"Doctor"> | string
+  averageRating?: Prisma.FloatFilter<"Doctor"> | number
   isDeleted?: Prisma.BoolFilter<"Doctor"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Doctor"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Doctor"> | Date | string
@@ -313,6 +325,7 @@ export type DoctorWhereInput = {
   doctorSpecialities?: Prisma.DoctorSpecialtiesListRelationFilter
   appointments?: Prisma.AppointmentListRelationFilter
   prescriptions?: Prisma.PrescriptionListRelationFilter
+  review?: Prisma.ReviewListRelationFilter
 }
 
 export type DoctorOrderByWithRelationInput = {
@@ -329,6 +342,7 @@ export type DoctorOrderByWithRelationInput = {
   qualification?: Prisma.SortOrder
   currentWorkingPlace?: Prisma.SortOrder
   designation?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -337,6 +351,7 @@ export type DoctorOrderByWithRelationInput = {
   doctorSpecialities?: Prisma.DoctorSpecialtiesOrderByRelationAggregateInput
   appointments?: Prisma.AppointmentOrderByRelationAggregateInput
   prescriptions?: Prisma.PrescriptionOrderByRelationAggregateInput
+  review?: Prisma.ReviewOrderByRelationAggregateInput
 }
 
 export type DoctorWhereUniqueInput = Prisma.AtLeast<{
@@ -356,6 +371,7 @@ export type DoctorWhereUniqueInput = Prisma.AtLeast<{
   qualification?: Prisma.StringFilter<"Doctor"> | string
   currentWorkingPlace?: Prisma.StringFilter<"Doctor"> | string
   designation?: Prisma.StringFilter<"Doctor"> | string
+  averageRating?: Prisma.FloatFilter<"Doctor"> | number
   isDeleted?: Prisma.BoolFilter<"Doctor"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Doctor"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Doctor"> | Date | string
@@ -364,6 +380,7 @@ export type DoctorWhereUniqueInput = Prisma.AtLeast<{
   doctorSpecialities?: Prisma.DoctorSpecialtiesListRelationFilter
   appointments?: Prisma.AppointmentListRelationFilter
   prescriptions?: Prisma.PrescriptionListRelationFilter
+  review?: Prisma.ReviewListRelationFilter
 }, "id" | "email">
 
 export type DoctorOrderByWithAggregationInput = {
@@ -380,6 +397,7 @@ export type DoctorOrderByWithAggregationInput = {
   qualification?: Prisma.SortOrder
   currentWorkingPlace?: Prisma.SortOrder
   designation?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -407,6 +425,7 @@ export type DoctorScalarWhereWithAggregatesInput = {
   qualification?: Prisma.StringWithAggregatesFilter<"Doctor"> | string
   currentWorkingPlace?: Prisma.StringWithAggregatesFilter<"Doctor"> | string
   designation?: Prisma.StringWithAggregatesFilter<"Doctor"> | string
+  averageRating?: Prisma.FloatWithAggregatesFilter<"Doctor"> | number
   isDeleted?: Prisma.BoolWithAggregatesFilter<"Doctor"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Doctor"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Doctor"> | Date | string
@@ -425,6 +444,7 @@ export type DoctorCreateInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -433,6 +453,7 @@ export type DoctorCreateInput = {
   doctorSpecialities?: Prisma.DoctorSpecialtiesCreateNestedManyWithoutDoctorInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutDoctorInput
   prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutDoctorInput
+  review?: Prisma.ReviewCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorUncheckedCreateInput = {
@@ -449,6 +470,7 @@ export type DoctorUncheckedCreateInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -456,6 +478,7 @@ export type DoctorUncheckedCreateInput = {
   doctorSpecialities?: Prisma.DoctorSpecialtiesUncheckedCreateNestedManyWithoutDoctorInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutDoctorInput
   prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorUpdateInput = {
@@ -471,6 +494,7 @@ export type DoctorUpdateInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -479,6 +503,7 @@ export type DoctorUpdateInput = {
   doctorSpecialities?: Prisma.DoctorSpecialtiesUpdateManyWithoutDoctorNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutDoctorNestedInput
   prescriptions?: Prisma.PrescriptionUpdateManyWithoutDoctorNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorUncheckedUpdateInput = {
@@ -495,6 +520,7 @@ export type DoctorUncheckedUpdateInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -502,6 +528,7 @@ export type DoctorUncheckedUpdateInput = {
   doctorSpecialities?: Prisma.DoctorSpecialtiesUncheckedUpdateManyWithoutDoctorNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
   prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorCreateManyInput = {
@@ -518,6 +545,7 @@ export type DoctorCreateManyInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -536,6 +564,7 @@ export type DoctorUpdateManyMutationInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -555,6 +584,7 @@ export type DoctorUncheckedUpdateManyInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -584,6 +614,7 @@ export type DoctorCountOrderByAggregateInput = {
   qualification?: Prisma.SortOrder
   currentWorkingPlace?: Prisma.SortOrder
   designation?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -592,6 +623,7 @@ export type DoctorCountOrderByAggregateInput = {
 export type DoctorAvgOrderByAggregateInput = {
   experience?: Prisma.SortOrder
   appointmentFee?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
 }
 
 export type DoctorMaxOrderByAggregateInput = {
@@ -608,6 +640,7 @@ export type DoctorMaxOrderByAggregateInput = {
   qualification?: Prisma.SortOrder
   currentWorkingPlace?: Prisma.SortOrder
   designation?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -627,6 +660,7 @@ export type DoctorMinOrderByAggregateInput = {
   qualification?: Prisma.SortOrder
   currentWorkingPlace?: Prisma.SortOrder
   designation?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -635,6 +669,7 @@ export type DoctorMinOrderByAggregateInput = {
 export type DoctorSumOrderByAggregateInput = {
   experience?: Prisma.SortOrder
   appointmentFee?: Prisma.SortOrder
+  averageRating?: Prisma.SortOrder
 }
 
 export type DoctorCreateNestedOneWithoutAppointmentsInput = {
@@ -663,6 +698,20 @@ export type DoctorUpdateOneRequiredWithoutPrescriptionsNestedInput = {
   upsert?: Prisma.DoctorUpsertWithoutPrescriptionsInput
   connect?: Prisma.DoctorWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.DoctorUpdateToOneWithWhereWithoutPrescriptionsInput, Prisma.DoctorUpdateWithoutPrescriptionsInput>, Prisma.DoctorUncheckedUpdateWithoutPrescriptionsInput>
+}
+
+export type DoctorCreateNestedOneWithoutReviewInput = {
+  create?: Prisma.XOR<Prisma.DoctorCreateWithoutReviewInput, Prisma.DoctorUncheckedCreateWithoutReviewInput>
+  connectOrCreate?: Prisma.DoctorCreateOrConnectWithoutReviewInput
+  connect?: Prisma.DoctorWhereUniqueInput
+}
+
+export type DoctorUpdateOneRequiredWithoutReviewNestedInput = {
+  create?: Prisma.XOR<Prisma.DoctorCreateWithoutReviewInput, Prisma.DoctorUncheckedCreateWithoutReviewInput>
+  connectOrCreate?: Prisma.DoctorCreateOrConnectWithoutReviewInput
+  upsert?: Prisma.DoctorUpsertWithoutReviewInput
+  connect?: Prisma.DoctorWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DoctorUpdateToOneWithWhereWithoutReviewInput, Prisma.DoctorUpdateWithoutReviewInput>, Prisma.DoctorUncheckedUpdateWithoutReviewInput>
 }
 
 export type DoctorCreateNestedOneWithoutDoctorScheduleInput = {
@@ -733,10 +782,6 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type EnumGenderFieldUpdateOperationsInput = {
-  set?: $Enums.Gender
-}
-
 export type DoctorCreateWithoutAppointmentsInput = {
   id?: string
   name: string
@@ -750,6 +795,7 @@ export type DoctorCreateWithoutAppointmentsInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -757,6 +803,7 @@ export type DoctorCreateWithoutAppointmentsInput = {
   doctorSchedule?: Prisma.DoctorSchedulesCreateNestedManyWithoutDoctorInput
   doctorSpecialities?: Prisma.DoctorSpecialtiesCreateNestedManyWithoutDoctorInput
   prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutDoctorInput
+  review?: Prisma.ReviewCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorUncheckedCreateWithoutAppointmentsInput = {
@@ -773,12 +820,14 @@ export type DoctorUncheckedCreateWithoutAppointmentsInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   doctorSchedule?: Prisma.DoctorSchedulesUncheckedCreateNestedManyWithoutDoctorInput
   doctorSpecialities?: Prisma.DoctorSpecialtiesUncheckedCreateNestedManyWithoutDoctorInput
   prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorCreateOrConnectWithoutAppointmentsInput = {
@@ -810,6 +859,7 @@ export type DoctorUpdateWithoutAppointmentsInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -817,6 +867,7 @@ export type DoctorUpdateWithoutAppointmentsInput = {
   doctorSchedule?: Prisma.DoctorSchedulesUpdateManyWithoutDoctorNestedInput
   doctorSpecialities?: Prisma.DoctorSpecialtiesUpdateManyWithoutDoctorNestedInput
   prescriptions?: Prisma.PrescriptionUpdateManyWithoutDoctorNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorUncheckedUpdateWithoutAppointmentsInput = {
@@ -833,12 +884,14 @@ export type DoctorUncheckedUpdateWithoutAppointmentsInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   doctorSchedule?: Prisma.DoctorSchedulesUncheckedUpdateManyWithoutDoctorNestedInput
   doctorSpecialities?: Prisma.DoctorSpecialtiesUncheckedUpdateManyWithoutDoctorNestedInput
   prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorCreateWithoutPrescriptionsInput = {
@@ -854,6 +907,7 @@ export type DoctorCreateWithoutPrescriptionsInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -861,6 +915,7 @@ export type DoctorCreateWithoutPrescriptionsInput = {
   doctorSchedule?: Prisma.DoctorSchedulesCreateNestedManyWithoutDoctorInput
   doctorSpecialities?: Prisma.DoctorSpecialtiesCreateNestedManyWithoutDoctorInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutDoctorInput
+  review?: Prisma.ReviewCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorUncheckedCreateWithoutPrescriptionsInput = {
@@ -877,12 +932,14 @@ export type DoctorUncheckedCreateWithoutPrescriptionsInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   doctorSchedule?: Prisma.DoctorSchedulesUncheckedCreateNestedManyWithoutDoctorInput
   doctorSpecialities?: Prisma.DoctorSpecialtiesUncheckedCreateNestedManyWithoutDoctorInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutDoctorInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorCreateOrConnectWithoutPrescriptionsInput = {
@@ -914,6 +971,7 @@ export type DoctorUpdateWithoutPrescriptionsInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -921,6 +979,7 @@ export type DoctorUpdateWithoutPrescriptionsInput = {
   doctorSchedule?: Prisma.DoctorSchedulesUpdateManyWithoutDoctorNestedInput
   doctorSpecialities?: Prisma.DoctorSpecialtiesUpdateManyWithoutDoctorNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutDoctorNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorUncheckedUpdateWithoutPrescriptionsInput = {
@@ -937,12 +996,126 @@ export type DoctorUncheckedUpdateWithoutPrescriptionsInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   doctorSchedule?: Prisma.DoctorSchedulesUncheckedUpdateManyWithoutDoctorNestedInput
   doctorSpecialities?: Prisma.DoctorSpecialtiesUncheckedUpdateManyWithoutDoctorNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutDoctorNestedInput
+}
+
+export type DoctorCreateWithoutReviewInput = {
+  id?: string
+  name: string
+  profilePhoto?: string | null
+  contactNumber: string
+  address: string
+  registrationNumber: string
+  experience?: number
+  gender: $Enums.Gender
+  appointmentFee: number
+  qualification: string
+  currentWorkingPlace: string
+  designation: string
+  averageRating?: number
+  isDeleted?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutDoctorInput
+  doctorSchedule?: Prisma.DoctorSchedulesCreateNestedManyWithoutDoctorInput
+  doctorSpecialities?: Prisma.DoctorSpecialtiesCreateNestedManyWithoutDoctorInput
+  appointments?: Prisma.AppointmentCreateNestedManyWithoutDoctorInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutDoctorInput
+}
+
+export type DoctorUncheckedCreateWithoutReviewInput = {
+  id?: string
+  name: string
+  email: string
+  profilePhoto?: string | null
+  contactNumber: string
+  address: string
+  registrationNumber: string
+  experience?: number
+  gender: $Enums.Gender
+  appointmentFee: number
+  qualification: string
+  currentWorkingPlace: string
+  designation: string
+  averageRating?: number
+  isDeleted?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  doctorSchedule?: Prisma.DoctorSchedulesUncheckedCreateNestedManyWithoutDoctorInput
+  doctorSpecialities?: Prisma.DoctorSpecialtiesUncheckedCreateNestedManyWithoutDoctorInput
+  appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutDoctorInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+}
+
+export type DoctorCreateOrConnectWithoutReviewInput = {
+  where: Prisma.DoctorWhereUniqueInput
+  create: Prisma.XOR<Prisma.DoctorCreateWithoutReviewInput, Prisma.DoctorUncheckedCreateWithoutReviewInput>
+}
+
+export type DoctorUpsertWithoutReviewInput = {
+  update: Prisma.XOR<Prisma.DoctorUpdateWithoutReviewInput, Prisma.DoctorUncheckedUpdateWithoutReviewInput>
+  create: Prisma.XOR<Prisma.DoctorCreateWithoutReviewInput, Prisma.DoctorUncheckedCreateWithoutReviewInput>
+  where?: Prisma.DoctorWhereInput
+}
+
+export type DoctorUpdateToOneWithWhereWithoutReviewInput = {
+  where?: Prisma.DoctorWhereInput
+  data: Prisma.XOR<Prisma.DoctorUpdateWithoutReviewInput, Prisma.DoctorUncheckedUpdateWithoutReviewInput>
+}
+
+export type DoctorUpdateWithoutReviewInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  experience?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  qualification?: Prisma.StringFieldUpdateOperationsInput | string
+  currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutDoctorNestedInput
+  doctorSchedule?: Prisma.DoctorSchedulesUpdateManyWithoutDoctorNestedInput
+  doctorSpecialities?: Prisma.DoctorSpecialtiesUpdateManyWithoutDoctorNestedInput
+  appointments?: Prisma.AppointmentUpdateManyWithoutDoctorNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutDoctorNestedInput
+}
+
+export type DoctorUncheckedUpdateWithoutReviewInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  experience?: Prisma.IntFieldUpdateOperationsInput | number
+  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  qualification?: Prisma.StringFieldUpdateOperationsInput | string
+  currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  doctorSchedule?: Prisma.DoctorSchedulesUncheckedUpdateManyWithoutDoctorNestedInput
+  doctorSpecialities?: Prisma.DoctorSpecialtiesUncheckedUpdateManyWithoutDoctorNestedInput
+  appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorCreateWithoutDoctorScheduleInput = {
@@ -958,6 +1131,7 @@ export type DoctorCreateWithoutDoctorScheduleInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -965,6 +1139,7 @@ export type DoctorCreateWithoutDoctorScheduleInput = {
   doctorSpecialities?: Prisma.DoctorSpecialtiesCreateNestedManyWithoutDoctorInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutDoctorInput
   prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutDoctorInput
+  review?: Prisma.ReviewCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorUncheckedCreateWithoutDoctorScheduleInput = {
@@ -981,12 +1156,14 @@ export type DoctorUncheckedCreateWithoutDoctorScheduleInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   doctorSpecialities?: Prisma.DoctorSpecialtiesUncheckedCreateNestedManyWithoutDoctorInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutDoctorInput
   prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorCreateOrConnectWithoutDoctorScheduleInput = {
@@ -1018,6 +1195,7 @@ export type DoctorUpdateWithoutDoctorScheduleInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1025,6 +1203,7 @@ export type DoctorUpdateWithoutDoctorScheduleInput = {
   doctorSpecialities?: Prisma.DoctorSpecialtiesUpdateManyWithoutDoctorNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutDoctorNestedInput
   prescriptions?: Prisma.PrescriptionUpdateManyWithoutDoctorNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorUncheckedUpdateWithoutDoctorScheduleInput = {
@@ -1041,12 +1220,14 @@ export type DoctorUncheckedUpdateWithoutDoctorScheduleInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   doctorSpecialities?: Prisma.DoctorSpecialtiesUncheckedUpdateManyWithoutDoctorNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
   prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorCreateWithoutDoctorSpecialitiesInput = {
@@ -1062,6 +1243,7 @@ export type DoctorCreateWithoutDoctorSpecialitiesInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1069,6 +1251,7 @@ export type DoctorCreateWithoutDoctorSpecialitiesInput = {
   doctorSchedule?: Prisma.DoctorSchedulesCreateNestedManyWithoutDoctorInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutDoctorInput
   prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutDoctorInput
+  review?: Prisma.ReviewCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorUncheckedCreateWithoutDoctorSpecialitiesInput = {
@@ -1085,12 +1268,14 @@ export type DoctorUncheckedCreateWithoutDoctorSpecialitiesInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   doctorSchedule?: Prisma.DoctorSchedulesUncheckedCreateNestedManyWithoutDoctorInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutDoctorInput
   prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorCreateOrConnectWithoutDoctorSpecialitiesInput = {
@@ -1122,6 +1307,7 @@ export type DoctorUpdateWithoutDoctorSpecialitiesInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1129,6 +1315,7 @@ export type DoctorUpdateWithoutDoctorSpecialitiesInput = {
   doctorSchedule?: Prisma.DoctorSchedulesUpdateManyWithoutDoctorNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutDoctorNestedInput
   prescriptions?: Prisma.PrescriptionUpdateManyWithoutDoctorNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorUncheckedUpdateWithoutDoctorSpecialitiesInput = {
@@ -1145,12 +1332,14 @@ export type DoctorUncheckedUpdateWithoutDoctorSpecialitiesInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   doctorSchedule?: Prisma.DoctorSchedulesUncheckedUpdateManyWithoutDoctorNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
   prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorCreateWithoutUserInput = {
@@ -1166,6 +1355,7 @@ export type DoctorCreateWithoutUserInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1173,6 +1363,7 @@ export type DoctorCreateWithoutUserInput = {
   doctorSpecialities?: Prisma.DoctorSpecialtiesCreateNestedManyWithoutDoctorInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutDoctorInput
   prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutDoctorInput
+  review?: Prisma.ReviewCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorUncheckedCreateWithoutUserInput = {
@@ -1188,6 +1379,7 @@ export type DoctorUncheckedCreateWithoutUserInput = {
   qualification: string
   currentWorkingPlace: string
   designation: string
+  averageRating?: number
   isDeleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1195,6 +1387,7 @@ export type DoctorUncheckedCreateWithoutUserInput = {
   doctorSpecialities?: Prisma.DoctorSpecialtiesUncheckedCreateNestedManyWithoutDoctorInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutDoctorInput
   prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutDoctorInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorCreateOrConnectWithoutUserInput = {
@@ -1226,6 +1419,7 @@ export type DoctorUpdateWithoutUserInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1233,6 +1427,7 @@ export type DoctorUpdateWithoutUserInput = {
   doctorSpecialities?: Prisma.DoctorSpecialtiesUpdateManyWithoutDoctorNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutDoctorNestedInput
   prescriptions?: Prisma.PrescriptionUpdateManyWithoutDoctorNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorUncheckedUpdateWithoutUserInput = {
@@ -1248,6 +1443,7 @@ export type DoctorUncheckedUpdateWithoutUserInput = {
   qualification?: Prisma.StringFieldUpdateOperationsInput | string
   currentWorkingPlace?: Prisma.StringFieldUpdateOperationsInput | string
   designation?: Prisma.StringFieldUpdateOperationsInput | string
+  averageRating?: Prisma.FloatFieldUpdateOperationsInput | number
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1255,6 +1451,7 @@ export type DoctorUncheckedUpdateWithoutUserInput = {
   doctorSpecialities?: Prisma.DoctorSpecialtiesUncheckedUpdateManyWithoutDoctorNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
   prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutDoctorNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutDoctorNestedInput
 }
 
 
@@ -1267,6 +1464,7 @@ export type DoctorCountOutputType = {
   doctorSpecialities: number
   appointments: number
   prescriptions: number
+  review: number
 }
 
 export type DoctorCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1274,6 +1472,7 @@ export type DoctorCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   doctorSpecialities?: boolean | DoctorCountOutputTypeCountDoctorSpecialitiesArgs
   appointments?: boolean | DoctorCountOutputTypeCountAppointmentsArgs
   prescriptions?: boolean | DoctorCountOutputTypeCountPrescriptionsArgs
+  review?: boolean | DoctorCountOutputTypeCountReviewArgs
 }
 
 /**
@@ -1314,6 +1513,13 @@ export type DoctorCountOutputTypeCountPrescriptionsArgs<ExtArgs extends runtime.
   where?: Prisma.PrescriptionWhereInput
 }
 
+/**
+ * DoctorCountOutputType without action
+ */
+export type DoctorCountOutputTypeCountReviewArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewWhereInput
+}
+
 
 export type DoctorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1329,6 +1535,7 @@ export type DoctorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   qualification?: boolean
   currentWorkingPlace?: boolean
   designation?: boolean
+  averageRating?: boolean
   isDeleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1337,6 +1544,7 @@ export type DoctorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   doctorSpecialities?: boolean | Prisma.Doctor$doctorSpecialitiesArgs<ExtArgs>
   appointments?: boolean | Prisma.Doctor$appointmentsArgs<ExtArgs>
   prescriptions?: boolean | Prisma.Doctor$prescriptionsArgs<ExtArgs>
+  review?: boolean | Prisma.Doctor$reviewArgs<ExtArgs>
   _count?: boolean | Prisma.DoctorCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["doctor"]>
 
@@ -1354,6 +1562,7 @@ export type DoctorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   qualification?: boolean
   currentWorkingPlace?: boolean
   designation?: boolean
+  averageRating?: boolean
   isDeleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1374,6 +1583,7 @@ export type DoctorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   qualification?: boolean
   currentWorkingPlace?: boolean
   designation?: boolean
+  averageRating?: boolean
   isDeleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1394,18 +1604,20 @@ export type DoctorSelectScalar = {
   qualification?: boolean
   currentWorkingPlace?: boolean
   designation?: boolean
+  averageRating?: boolean
   isDeleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DoctorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "profilePhoto" | "contactNumber" | "address" | "registrationNumber" | "experience" | "gender" | "appointmentFee" | "qualification" | "currentWorkingPlace" | "designation" | "isDeleted" | "createdAt" | "updatedAt", ExtArgs["result"]["doctor"]>
+export type DoctorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "profilePhoto" | "contactNumber" | "address" | "registrationNumber" | "experience" | "gender" | "appointmentFee" | "qualification" | "currentWorkingPlace" | "designation" | "averageRating" | "isDeleted" | "createdAt" | "updatedAt", ExtArgs["result"]["doctor"]>
 export type DoctorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   doctorSchedule?: boolean | Prisma.Doctor$doctorScheduleArgs<ExtArgs>
   doctorSpecialities?: boolean | Prisma.Doctor$doctorSpecialitiesArgs<ExtArgs>
   appointments?: boolean | Prisma.Doctor$appointmentsArgs<ExtArgs>
   prescriptions?: boolean | Prisma.Doctor$prescriptionsArgs<ExtArgs>
+  review?: boolean | Prisma.Doctor$reviewArgs<ExtArgs>
   _count?: boolean | Prisma.DoctorCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DoctorIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1423,6 +1635,7 @@ export type $DoctorPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     doctorSpecialities: Prisma.$DoctorSpecialtiesPayload<ExtArgs>[]
     appointments: Prisma.$AppointmentPayload<ExtArgs>[]
     prescriptions: Prisma.$PrescriptionPayload<ExtArgs>[]
+    review: Prisma.$ReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1438,6 +1651,7 @@ export type $DoctorPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     qualification: string
     currentWorkingPlace: string
     designation: string
+    averageRating: number
     isDeleted: boolean
     createdAt: Date
     updatedAt: Date
@@ -1840,6 +2054,7 @@ export interface Prisma__DoctorClient<T, Null = never, ExtArgs extends runtime.T
   doctorSpecialities<T extends Prisma.Doctor$doctorSpecialitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Doctor$doctorSpecialitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DoctorSpecialtiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   appointments<T extends Prisma.Doctor$appointmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Doctor$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   prescriptions<T extends Prisma.Doctor$prescriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Doctor$prescriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PrescriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  review<T extends Prisma.Doctor$reviewArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Doctor$reviewArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1882,6 +2097,7 @@ export interface DoctorFieldRefs {
   readonly qualification: Prisma.FieldRef<"Doctor", 'String'>
   readonly currentWorkingPlace: Prisma.FieldRef<"Doctor", 'String'>
   readonly designation: Prisma.FieldRef<"Doctor", 'String'>
+  readonly averageRating: Prisma.FieldRef<"Doctor", 'Float'>
   readonly isDeleted: Prisma.FieldRef<"Doctor", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Doctor", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Doctor", 'DateTime'>
@@ -2379,6 +2595,30 @@ export type Doctor$prescriptionsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.PrescriptionScalarFieldEnum | Prisma.PrescriptionScalarFieldEnum[]
+}
+
+/**
+ * Doctor.review
+ */
+export type Doctor$reviewArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Review
+   */
+  select?: Prisma.ReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Review
+   */
+  omit?: Prisma.ReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewInclude<ExtArgs> | null
+  where?: Prisma.ReviewWhereInput
+  orderBy?: Prisma.ReviewOrderByWithRelationInput | Prisma.ReviewOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
 }
 
 /**
