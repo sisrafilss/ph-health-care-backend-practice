@@ -1,14 +1,20 @@
 import express, { NextFunction, Request, Response } from "express";
-import { UserController } from "./user.controller";
-import { fileUploader } from "../../helpers/fileUploader";
-import { userValidation } from "./user.validation";
-import auth from "../../middlewares/auth";
 import { UserRole } from "../../generated/enums";
+import { fileUploader } from "../../helpers/fileUploader";
+import auth from "../../middlewares/auth";
+import { UserController } from "./user.controller";
+import { userValidation } from "./user.validation";
 
 const router = express.Router();
 
 // GET - All users
 router.get("/", auth(UserRole.ADMIN), UserController.getAllFromDB);
+
+router.get(
+  "/me",
+  auth(UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  UserController.getMe,
+);
 
 router.post(
   "/create-patient",
@@ -41,6 +47,12 @@ router.post(
     );
     return UserController.createAdmin(req, res, next);
   },
+);
+
+router.patch(
+  "/:id/status",
+  auth(UserRole.ADMIN),
+  UserController.changeProfileStatus,
 );
 
 export const userRoutes = router;

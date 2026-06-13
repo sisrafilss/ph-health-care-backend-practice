@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get(
   "/my-prescriptions",
-  auth(UserRole.PATIENT, UserRole.DOCTOR),
+  auth(UserRole.PATIENT),
   PrescriptionController.getMyPrescriptions,
 );
 

@@ -17,7 +17,7 @@ const createPrescription = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.CREATED,
       success: true,
-      message: "Appointment Created Sucessfully",
+      message: "Prescription Created Sucessfully",
       data: result,
     });
   },
@@ -25,12 +25,10 @@ const createPrescription = catchAsync(
 
 const getMyPrescriptions = catchAsync(
   async (req: Request & { user?: IJwtPayload }, res: Response) => {
-    const filter = pick(req.query, ["followUpDate", "searchTerm"]);
     const options = pick(req.query, ["page", "limit", "sortBy", "sortOrder"]);
 
     const result = await PrescriptionService.getMyPrescriptions(
       req.user as IJwtPayload,
-      filter,
       options as IOptions,
     );
 

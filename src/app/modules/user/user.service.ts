@@ -1,11 +1,12 @@
 import bcrypt from "bcryptjs";
-import { prisma } from "../../../lib/prisma";
-import config from "../../../config";
 import { Request } from "express";
-import { fileUploader } from "../../helpers/fileUploader";
-import { UserRole } from "../../generated/enums";
+import config from "../../../config";
+import { prisma } from "../../../lib/prisma";
+import { UserRole, UserStatus } from "../../generated/enums";
 import { UserWhereInput } from "../../generated/models";
+import { fileUploader } from "../../helpers/fileUploader";
 import { IOptions, paginationHelper } from "../../helpers/paginationHelper";
+import { IJwtPayload } from "../../types/common";
 import { userSearchableFields } from "./user.constant";
 
 const getAllFromDB = async (params: any, options: IOptions) => {
@@ -140,9 +141,76 @@ const createAdmin = async (req: Request) => {
   });
 };
 
+const getMe = async (user: IJwtPayload) => {
+  const userData = await prisma.user.findUniqueOrThrow({
+    where: {
+      email: user.email,
+      status: UserStatus.ACTIVE,
+    },
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      needPasswordChange: true,
+      status: true,
+    },
+  });
+
+  let profileData;
+  if (userData.role === UserRole.PATIENT) {
+    profileData = await prisma.patient.findUnique({
+      where: {
+        email: userData.email,
+      },
+    });
+  } else if (userData.role === UserRole.DOCTOR) {
+    profileData = await prisma.doctor.findUnique({
+      where: {
+        email: userData.email,
+      },
+    });
+  }
+  if (userData.role === UserRole.ADMIN) {
+    profileData = await prisma.admin.findUnique({
+      where: {
+        email: userData.email,
+      },
+    });
+  }
+
+  return {
+    ...userData,
+    ...profileData,
+  };
+};
+
+const changeProfileStatus = async (
+  id: string,
+  payload: { status: UserStatus },
+) => {
+  const userData = await prisma.user.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  const updatedUserData = await prisma.user.update({
+    where: {
+      id: userData.id,
+    },
+    data: {
+      payload,
+    },
+  });
+
+  return updatedUserData;
+};
+
 export const UserService = {
   createPatient,
   createDoctor,
   createAdmin,
   getAllFromDB,
+  getMe,
+  changeProfileStatus,
 };

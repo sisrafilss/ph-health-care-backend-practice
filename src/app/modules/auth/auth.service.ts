@@ -156,7 +156,7 @@ const resetPassword = async (
   token: string,
   payload: { id: string; password: string },
 ) => {
-  const userData = await prisma.user.findUniqueOrThrow({
+  await prisma.user.findUniqueOrThrow({
     where: {
       id: payload.id,
       status: UserStatus.ACTIVE,
@@ -220,4 +220,5 @@ export const AuthService = {
   refreshToken,
   changePassword,
   forgotPassword,
+  resetPassword,
 };

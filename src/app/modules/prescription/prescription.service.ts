@@ -7,7 +7,6 @@ import {
   Prescription,
   UserRole,
 } from "../../generated/client";
-import { PrescriptionWhereInput } from "../../generated/models";
 import { IOptions, paginationHelper } from "../../helpers/paginationHelper";
 import { IJwtPayload } from "../../types/common";
 
@@ -48,73 +47,34 @@ const createPrescription = async (
   return prescriptionData;
 };
 
-const getMyPrescriptions = async (
-  user: IJwtPayload,
-  filter: any,
-  options: IOptions,
-) => {
+const getMyPrescriptions = async (user: IJwtPayload, options: IOptions) => {
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelper.calculatePagination(options);
-  const { searchTerm, ...filterData } = filter;
-
-  const andCondition: PrescriptionWhereInput[] = [];
-
-  if (user.role === UserRole.PATIENT) {
-    andCondition.push({
-      patient: {
-        email: user.email,
-      },
-    });
-  } else if (user.role === UserRole.DOCTOR) {
-    andCondition.push({
-      doctor: {
-        email: user.email,
-      },
-    });
-  }
-
-  if (searchTerm) {
-    andCondition.push({
-      OR: ["instructions"].map((field) => ({
-        [field]: {
-          contains: searchTerm,
-          mode: "insensitive",
-        },
-      })),
-    });
-  }
-
-  if (Object.keys(filterData).length > 0) {
-    const filterConditions = Object.keys(filterData).map((key) => ({
-      [key]: {
-        equals: filterData[key],
-      },
-    }));
-    andCondition.push(...filterConditions);
-  }
-
-  const whereCondition: PrescriptionWhereInput =
-    andCondition.length > 0 ? { AND: andCondition } : {};
 
   const result = await prisma.prescription.findMany({
     skip,
     take: limit,
-    where: whereCondition,
+    where: {
+      patient: {
+        email: user.email,
+      },
+    },
     orderBy: {
       [sortBy]: sortOrder,
     },
-    include:
-      user.role === UserRole.PATIENT
-        ? {
-            doctor: true,
-          }
-        : {
-            patient: true,
-          },
+    include: {
+      doctor: true,
+      patient: true,
+      appointment: true,
+    },
   });
 
   const total = await prisma.prescription.count({
-    where: whereCondition,
+    where: {
+      patient: {
+        email: user.email,
+      },
+    },
   });
 
   return {
