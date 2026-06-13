@@ -16,6 +16,7 @@ export default {
   jwt: {
     jwt_access_token_secret: process.env.JWT_ACCESS_TOKEN_SECRET,
     jwt_refresh_token_secret: process.env.JWT_REFRESH_TOKEN_SECRET,
+    jwt_reset_pass_secret: process.env.JWT_RESET_PASS_SECRET,
     jwt_access_token_expires_in: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN,
     jwt_refresh_token_expires_in: process.env.JWT_REFRESH_TOKEN_EXPIRES_IN,
     jwt_algorithm: process.env.JWT_ALGORITHM,
@@ -23,4 +24,9 @@ export default {
   open_router_api_key: process.env.OPEN_ROUTER_API_KEY,
   stripe_secret_key: process.env.STRIPE_SECRET_KEY,
   stripe_webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
+  reset_password_link: process.env.RESET_PASSWORD_LINK,
+  smtp: {
+    smtp_user: process.env.SMTP_USER,
+    smtp_pass: process.env.SMTP_PASS,
+  },
 };

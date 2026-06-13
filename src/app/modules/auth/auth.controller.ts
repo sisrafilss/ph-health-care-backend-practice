@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
 
+import httpStatus from "http-status";
 import sendResponse from "../../shared/sendResponse";
+import { IJwtPayload } from "../../types/common";
 import { AuthService } from "./auth.service";
 
 const login = catchAsync(async (req: Request, res: Response) => {
@@ -22,13 +24,77 @@ const login = catchAsync(async (req: Request, res: Response) => {
   });
 
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: httpStatus.OK,
     success: true,
     message: "User Loggedin successfully",
     data: { needPasswordChange: result.needPasswordChange },
   });
 });
 
+const refreshToken = catchAsync(async (req: Request, res: Response) => {
+  const { refreshToken } = req.cookies;
+
+  const result = await AuthService.refreshToken(refreshToken);
+
+  res.cookie("accessToken", result.accessToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: "none",
+    maxAge: 1000 * 60 * 60,
+  });
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Access Token generated successfully",
+    data: { message: "Access Token generated successfully" },
+  });
+});
+
+const changePassword = catchAsync(
+  async (req: Request & { user?: IJwtPayload }, res: Response) => {
+    const result = await AuthService.changePassword(
+      req.user as IJwtPayload,
+      req.body,
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Password changed successfully",
+      data: result,
+    });
+  },
+);
+
+const forgotPassword = catchAsync(async (req: Request, res: Response) => {
+  await AuthService.forgotPassword(req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Check your email",
+    data: "Password Reset Link sent to your Email Successfully",
+  });
+});
+
+const getMe = catchAsync(async (req: Request, res: Response) => {
+  const userSession = req.cookies;
+
+  const result = await AuthService.getMe(userSession);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User retrive successfully",
+    data: result,
+  });
+});
+
 export const AuthController = {
   login,
+  getMe,
+  refreshToken,
+  changePassword,
+  forgotPassword,
 };
