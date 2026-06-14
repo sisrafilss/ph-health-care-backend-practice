@@ -1,11 +1,15 @@
-import express, { NextFunction, Request, Response } from "express";
-import { DoctorScheduleController } from "./doctor-schedule.controller";
-import auth from "../../middlewares/auth";
+import express from "express";
 import { UserRole } from "../../generated/enums";
+import auth from "../../middlewares/auth";
+import { DoctorScheduleController } from "./doctor-schedule.controller";
 
 const router = express.Router();
 
-router.get("/", DoctorScheduleController.getAllDoctorSchedule);
+router.get(
+  "/",
+  auth(UserRole.ADMIN),
+  DoctorScheduleController.getAllDoctorSchedule,
+);
 
 router.post("/", auth(UserRole.DOCTOR), DoctorScheduleController.insertIntoDB);
 

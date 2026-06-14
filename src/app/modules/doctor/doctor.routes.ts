@@ -12,6 +12,12 @@ router.get(
 );
 
 router.get(
+  "/my-schedules",
+  auth(UserRole.DOCTOR),
+  DoctorController.getMySchedules,
+);
+
+router.get(
   "/:id",
   // auth(UserRole.ADMIN, UserRole.DOCTOR),
   DoctorController.getDoctorById,

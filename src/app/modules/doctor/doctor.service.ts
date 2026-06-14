@@ -1,10 +1,14 @@
 import httpStatus from "http-status";
 import { prisma } from "../../../lib/prisma";
 import ApiError from "../../errors/ApiError";
-import { DoctorWhereInput } from "../../generated/models";
+import {
+  DoctorSchedulesWhereInput,
+  DoctorWhereInput,
+} from "../../generated/models";
 import { extractJsonFromAIResponse } from "../../helpers/extractJsonFromAIResponse";
 import { openRouterclient } from "../../helpers/openRouter";
 import { IOptions, paginationHelper } from "../../helpers/paginationHelper";
+import { IJwtPayload } from "../../types/common";
 import { doctorSearchableFields } from "./doctor.constant";
 import { IDoctorUpdateInput } from "./doctor.interface";
 
@@ -241,10 +245,71 @@ Return your response in JSON format with full individual doctor data.
   return { AIresponse: suggestedDoctors };
 };
 
+const getMySchedules = async (
+  user: IJwtPayload,
+  params: any,
+  options: IOptions,
+) => {
+  const doctorData = await prisma.doctor.findUniqueOrThrow({
+    where: {
+      email: user.email,
+    },
+  });
+
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(options);
+
+  const { ...filterData } = params;
+
+  const andCondition: DoctorSchedulesWhereInput[] = [];
+
+  if (Object.keys(filterData).length > 0) {
+    andCondition.push({
+      AND: Object.keys(filterData).map((key) => ({
+        [key]: {
+          equals: filterData[key],
+        },
+      })),
+    });
+  }
+
+  const whereCondition: DoctorSchedulesWhereInput =
+    andCondition.length > 0 ? { AND: andCondition } : {};
+
+  const result = await prisma.doctorSchedules.findMany({
+    skip,
+    take: limit,
+    where: {
+      doctorId: doctorData.id,
+      ...whereCondition,
+    },
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+  });
+
+  const totalCount = await prisma.doctorSchedules.count({
+    where: {
+      doctorId: doctorData.id,
+      ...whereCondition,
+    },
+  });
+
+  return {
+    meta: {
+      page,
+      limit,
+      total: totalCount,
+    },
+    data: result,
+  };
+};
+
 export const DoctorService = {
   getAllFromDB,
   updateIntoDB,
   getDoctorById,
   deleteFromDB,
   getAISuggestions,
+  getMySchedules,
 };

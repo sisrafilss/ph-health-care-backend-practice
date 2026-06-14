@@ -199,11 +199,13 @@ const changeProfileStatus = async (
       id: userData.id,
     },
     data: {
-      payload,
+      status: payload.status,
     },
   });
 
-  return updatedUserData;
+  return {
+    updatedUserData,
+  };
 };
 
 export const UserService = {
