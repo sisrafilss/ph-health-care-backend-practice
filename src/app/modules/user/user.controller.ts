@@ -86,6 +86,22 @@ const changeProfileStatus = catchAsync(
   },
 );
 
+const updateProfile = catchAsync(
+  async (req: Request & { user?: IJwtPayload }, res: Response) => {
+    const result = await UserService.updateProfile(
+      req.user as IJwtPayload,
+      req.body,
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.CREATED,
+      success: true,
+      message: "User updated successfully",
+      data: result,
+    });
+  },
+);
+
 export const UserController = {
   createPatient,
   createDoctor,
@@ -93,4 +109,5 @@ export const UserController = {
   getAllFromDB,
   getMe,
   changeProfileStatus,
+  updateProfile,
 };

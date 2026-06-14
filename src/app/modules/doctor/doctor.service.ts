@@ -305,6 +305,23 @@ const getMySchedules = async (
   };
 };
 
+const deleteSchedule = async (user: IJwtPayload, scheduleId: string) => {
+  const doctorData = await prisma.doctor.findUniqueOrThrow({
+    where: {
+      email: user.email,
+    },
+  });
+
+  return await prisma.doctorSchedules.delete({
+    where: {
+      doctorId_scheduleId: {
+        doctorId: doctorData.id,
+        scheduleId: scheduleId,
+      },
+    },
+  });
+};
+
 export const DoctorService = {
   getAllFromDB,
   updateIntoDB,
@@ -312,4 +329,5 @@ export const DoctorService = {
   deleteFromDB,
   getAISuggestions,
   getMySchedules,
+  deleteSchedule,
 };

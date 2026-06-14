@@ -208,6 +208,46 @@ const changeProfileStatus = async (
   };
 };
 
+const updateProfile = async (user: IJwtPayload, payload: any) => {
+  const userData = await prisma.user.findUniqueOrThrow({
+    where: {
+      email: user.email,
+    },
+  });
+
+  let updatedData;
+  if (user.role === UserRole.PATIENT) {
+    updatedData = await prisma.patient.update({
+      where: {
+        email: userData.email,
+      },
+      data: {
+        ...payload,
+      },
+    });
+  } else if (user.role === UserRole.DOCTOR) {
+    updatedData = await prisma.doctor.update({
+      where: {
+        email: userData.email,
+      },
+      data: {
+        ...payload,
+      },
+    });
+  } else if (user.role === UserRole.ADMIN) {
+    updatedData = await prisma.admin.update({
+      where: {
+        email: userData.email,
+      },
+      data: {
+        ...payload,
+      },
+    });
+  }
+
+  return updatedData;
+};
+
 export const UserService = {
   createPatient,
   createDoctor,
@@ -215,4 +255,5 @@ export const UserService = {
   getAllFromDB,
   getMe,
   changeProfileStatus,
+  updateProfile,
 };

@@ -5,6 +5,7 @@ import { ReviewController } from "./review.controller";
 
 const router = express.Router();
 
+router.get("/", ReviewController.getAllReivews);
 router.post("/", auth(UserRole.PATIENT), ReviewController.createReview);
 
 export const reviewRoutes = router;

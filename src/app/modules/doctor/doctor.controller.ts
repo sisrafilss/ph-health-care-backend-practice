@@ -89,6 +89,23 @@ const getMySchedules = catchAsync(
     });
   },
 );
+const deleteSchedule = catchAsync(
+  async (req: Request & { user?: IJwtPayload }, res: Response) => {
+    const { id } = req.params;
+
+    const result = await DoctorService.deleteSchedule(
+      req.user as IJwtPayload,
+      id as string,
+    );
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Doctor Schedule Deleted Successfully!",
+      data: result,
+    });
+  },
+);
 
 export const DoctorController = {
   getAllFromDB,
@@ -97,4 +114,5 @@ export const DoctorController = {
   deleteFromDB,
   getAISuggestions,
   getMySchedules,
+  deleteSchedule,
 };

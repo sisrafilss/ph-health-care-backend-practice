@@ -1,6 +1,8 @@
 import httpStatus from "http-status";
 import { prisma } from "../../../lib/prisma";
 import ApiError from "../../errors/ApiError";
+import { ReviewWhereInput } from "../../generated/models";
+import { IOptions, paginationHelper } from "../../helpers/paginationHelper";
 import { IJwtPayload } from "../../types/common";
 
 const createReview = async (
@@ -56,6 +58,54 @@ const createReview = async (
   });
 };
 
+const getAllReivews = async (params: any, options: IOptions) => {
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(options);
+
+  const { ...filterData } = params;
+
+  const andCondition: ReviewWhereInput[] = [];
+
+  if (Object.keys(filterData).length > 0) {
+    andCondition.push({
+      AND: Object.keys(filterData).map((key) => ({
+        [key]: {
+          equals: filterData[key],
+        },
+      })),
+    });
+  }
+
+  const whereCondition: ReviewWhereInput =
+    andCondition.length > 0 ? { AND: andCondition } : {};
+
+  const result = await prisma.review.findMany({
+    skip,
+    take: limit,
+    where: whereCondition,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+    include: {
+      patient: true,
+      doctor: true,
+      appointment: true,
+    },
+  });
+
+  const totalCount = await prisma.review.count({ where: whereCondition });
+
+  return {
+    meta: {
+      page,
+      limit,
+      total: totalCount,
+    },
+    data: result,
+  };
+};
+
 export const ReviewService = {
   createReview,
+  getAllReivews,
 };

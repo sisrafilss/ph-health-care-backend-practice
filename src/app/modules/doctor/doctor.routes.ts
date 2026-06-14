@@ -38,4 +38,11 @@ router.patch(
 // soft delete
 router.delete("/:id", auth(UserRole.ADMIN), DoctorController.deleteFromDB);
 
+// delete doctor schedule
+router.delete(
+  "/schedule/:id",
+  auth(UserRole.DOCTOR),
+  DoctorController.deleteSchedule,
+);
+
 export const doctorRoutes = router;

@@ -55,4 +55,10 @@ router.patch(
   UserController.changeProfileStatus,
 );
 
+router.patch(
+  "/update",
+  auth(UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  UserController.updateProfile,
+);
+
 export const userRoutes = router;
